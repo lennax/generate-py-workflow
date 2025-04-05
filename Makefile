@@ -1,3 +1,4 @@
+export PATH := $(HOME)/go/bin:$(PATH)
 .PHONY: create_venv test
 
 create_venv:
