@@ -14,4 +14,4 @@ create_venv:
 test: $(SHELLCHECK_CHECK)
 	./.venv/bin/python3 generate_reusable_workflow.py example_script.py
 	actionlint generated_workflow.yml
-	diff generated_workflow.yml reference_workflow.yml
+	diff generated_workflow.yml .github/workflows/reference_workflow.yml
