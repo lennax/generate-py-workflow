@@ -17,3 +17,6 @@ jobs:
           cache: pip
       - run: make create_venv
       - run: make test
+        id: test
+      - run: cat generated_workflow.yml
+        if: steps.test.outcome == 'failure'
