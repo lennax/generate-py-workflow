@@ -20,3 +20,10 @@ jobs:
         id: test
       - run: cat generated_workflow.yml
         if: failure() && steps.test.outcome == 'failure'
+
+  verify:
+    uses: ./.github/workflows/reference_workflow.yml
+    with:
+      filename: "foo.txt"
+      count: 5
+      dry_run: true
