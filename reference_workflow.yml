@@ -32,10 +32,10 @@ jobs:
       - name: Run script
         run: |-
           cmd=(.venv/bin/python3 example_script.py ${{ inputs.filename }})
-          if [[ "${{ inputs.dry_run }}" ]]; then
+          if [[ -n "${{ inputs.dry_run }}" ]]; then
             cmd+=(--dry-run)
           fi
-          if [[ "${{ inputs.count }}" ]]; then
+          if [[ -n "${{ inputs.count }}" ]]; then
             cmd+=(--count)
             cmd+=("${{ inputs.count }}")
           fi
