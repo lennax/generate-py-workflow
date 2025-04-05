@@ -1,0 +1,43 @@
+name: Run example_script.py
+run-name: Run example_script.py ${{ inputs.dry_run && '(dry-run)' || '' }}
+on:
+  workflow_call:
+    inputs:
+      filename:
+        description: Filename to frobnicate
+        required: true
+        type: string
+      dry_run:
+        description:
+        required: false
+        type: boolean
+      count:
+        description: Number of times to frobnicate
+        required: false
+        type: string
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11.6
+          cache: pip
+      - name: Install dependencies
+        run: |-
+          python3 -m venv .venv
+          .venv/bin/python3 -m pip install -r requirements.txt
+      - name: Run script
+        run: |-
+          cmd=(.venv/bin/python3 example_script.py ${{ inputs.filename }})
+          if [[ "${{ inputs.dry_run }}" ]]; then
+            cmd+=(--dry-run)
+          fi
+          if [[ "${{ inputs.count }}" ]]; then
+            cmd+=(--count)
+            cmd+=("${{ inputs.count }}")
+          fi
+          echo "[DEBUG]" "${cmd[@]}"
+          "${cmd[@]}"
