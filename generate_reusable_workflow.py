@@ -135,14 +135,14 @@ def generate_workflow(script_path):
             else:
                 # Flag
                 optional_arg_lines.extend([
-                    'if [[ "${{ inputs.%s }}" ]]; then' % name,
+                    'if [[ -n "${{ inputs.%s }}" ]]; then' % name,
                     '  cmd+=(%s)' % flag,
                     '  cmd+=("${{ inputs.%s }}")' % name,
                     'fi',
                 ])
         elif input_type == 'boolean':
             optional_arg_lines.extend([
-                'if [[ "${{ inputs.%s }}" ]]; then' % name,
+                'if [[ -n "${{ inputs.%s }}" ]]; then' % name,
                 '  cmd+=(%s)' % flag,
                 'fi',
             ])
